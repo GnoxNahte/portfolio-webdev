@@ -11,6 +11,12 @@ import { SITE_TITLE } from '../consts';
 			<HeaderLink href="/blog">Blog</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
+		<div>
+			<label class="toggle">
+				<input type="checkbox" id="theme-toggle">
+				<span class="slider"></span>
+			</label>
+		</div>
 		<div class="social-links">
 			<a href="https://m.webtoo.ls/@astro" target="_blank">
 				<span class="sr-only">Follow Astro on Mastodon</span>
@@ -83,3 +89,40 @@ import { SITE_TITLE } from '../consts';
 		}
 	}
 </style>
+
+<script>
+	// Base is from: https://docs.astro.build/en/tutorial/6-islands/2/#add-client-side-interactivity with some modifications
+	
+	// Get the theme from localStorage, or from system default if not localStorage isn't available 
+	const theme = (() => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      	return localStorage.getItem('theme');
+    }
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      	return 'dark';
+    }
+      	return 'light';
+  	})();
+
+	const themeToggle = document.getElementById("theme-toggle") as HTMLInputElement;
+	
+	const setTheme = (isDark: boolean) => {
+		if (isDark) {
+			document.documentElement.classList.add('dark');
+		} else {
+			document.documentElement.classList.remove("dark");
+		}
+	}
+	
+	const onThemeToggleClicked = (e: MouseEvent) => {
+		setTheme(themeToggle.checked);
+
+		localStorage.setItem("theme", themeToggle.checked ? "dark" : "light")
+	}
+	
+	const isDark = theme === "dark";
+	themeToggle.checked = isDark;
+	setTheme(isDark);
+
+	themeToggle?.addEventListener("click", onThemeToggleClicked)
+</script>
