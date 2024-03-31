@@ -1,0 +1,29 @@
+<a href="#" id="return-to-top-arrow">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24">
+        <path d="m296-345-56-56 240-240 240 240-56 56-184-184-184 184Z"/>
+    </svg>
+</a>
+
+<script>
+    const root = document.documentElement;
+    const arrow = document.getElementById("return-to-top-arrow");
+    
+    const onScroll = () => {
+        // If there's a scrollbar, show the arrow. Else, hide it.
+        console.log("Scroll : "+ root.scrollTop)
+        if (arrow)
+            arrow.style.opacity =  root.scrollTop > 20 ? "1" : "0";
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+</script>
+
+<style>
+    #return-to-top-arrow {
+        position: fixed;
+        right: 60px;
+        bottom: 50px;
+        filter: brightness(0) invert(1);
+        transition: opacity 0.5s;
+    }
+</style>

@@ -2,6 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from '../components/Footer.astro';
+import ReturnToTopArrow from "../components/ReturnToTopArrow.astro";
+import { COOKIE_KEY_THEME } from "../consts";
 
 export interface Props {
     title: string;
@@ -10,17 +12,26 @@ export interface Props {
 }
 
 const { title, description, image } = Astro.props as Props;
+
+// let isDark = true;
+
+// if (Astro.cookies.has(COOKIE_KEY_THEME)) {
+//     isDark = Astro.cookies.get(COOKIE_KEY_THEME)?.value === "dark";
+// }
+// console.log("dar: " + isDark)
 ---
 
 <!DOCTYPE html>
+<!-- <html lang="en" class={isDark ? "dark" : "light"}> -->
 <html lang="en">
     <head>
         <BaseHead title={title} description={description} image={image}/>
     </head>
-    <body>
+    <body >
         <Header />
         <main>
             <slot />
+			<a href="#" class="return-to-top-arrow"><ReturnToTopArrow /></a>
         </main>
         <Footer />
     </body>
